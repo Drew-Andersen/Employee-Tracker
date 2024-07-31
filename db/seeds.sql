@@ -1,4 +1,4 @@
-INSERT INTO department (name) VALUE 
+INSERT INTO department (department_name) VALUES
 ('Human Resources'),
 ('Sales'),
 ('Customer Support'),
@@ -6,29 +6,26 @@ INSERT INTO department (name) VALUE
 ('Testing'),
 ('Development');
 
-INSERT INTO roll (title, salary, department) VALUES
+INSERT INTO roll (title, salary, department_id) VALUES
 ('Sales Lead', '100000', 2),
 ('Salesperson', '80000', 2),
 ('Lead Engineer', '150000', 4),
 ('Software Engineer', '125000', 4),
-('Account Manager', '160000', 2);
+('Account Manager', '160000', 2),
 ('Support Lead', '100000', 6),
 ('Support Member', '65000', 3),
 ('Test Engineer', '120000', 5);
 
-INSERT INTO employee (first_name, last_name, roll, manager) VALUES
-('John', 'Doe', 1, 'Tonya Smith'),
-('Samantha', 'Adams', 6, 'Andrew Lyons'),
-('Mitchael', 'Hall', 4, 'John Liliston'),
-('Jack', 'Smith', 4, 'John Liliston'),
-('Oscar', 'Robles', 3, 'Ava Andersen'),
-('Tim', 'Tester', 1, 'Tonya Smith'),
-('Rick', 'Ross', 2, 'Tina Helper'),
-('Ally', 'Smith', 3, 'Ava Andersen'),
-('Shelly', 'Hemmet', 2, 'Tina Helper'),
-('Lisa', 'Gibbs', 5, 'Tonya Smith'),
-();
+INSERT INTO employee (employee_name, manager, roll_id) VALUES
+('John Doe', 'Tonya Smith', 1),
+('Samantha Adams', 'Andrew Lyons', 6),
+('Mitchael Hall', 'John Liliston', 4),
+('Jack Smith', 'John Liliston', 4),
+('Oscar Robles', 'Ava Andersen', 3),
+('Tim Tester', 'Tonya Smith', 1),
+('Rick Ross', 'Tina Helper', 2),
+('Ally Smith', 'Ava Andersen', 3),
+('Shelly Hemmet', 'Tina Helper', 2),
+('Lisa Gibbs', 'Tonya Smith', 5),
+('Kyle Pratt', 'Andrew Lyons', 6);
 
-SELECT * FROM department;
-SELECT * FROM roll;
-SELECT * FROM employee;
