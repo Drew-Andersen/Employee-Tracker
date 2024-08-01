@@ -13,7 +13,7 @@ CREATE TABLE department (
 );
 
 -- Creates the roll table
-CREATE TABLE roll (
+CREATE TABLE role (
     id SERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
     salary INTEGER NOT NULL,
