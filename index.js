@@ -79,7 +79,7 @@ function userInput() {
                     viewAllEmployees();
                     break;
                 case 'VIEW_EMPLOYEES_BY_DEPARTMENT':
-                    VIEW_EMPLOYEES_BY_DEPARTMENT();
+                    viewAllEmployeesByDepartment();
                     break;
                 case 'ADD_EMPLOYEE':
                     createEmployee();

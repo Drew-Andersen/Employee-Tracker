@@ -11,7 +11,7 @@ class DB {
         );
     }
 
-    // Creates a new employee
+    // Creates a new employee to the database
     createEmployee(employee) {
         const { employee_name, role_id, manager } = employee;
         return this.query(
@@ -20,38 +20,67 @@ class DB {
         );
     }
 
-    // Deletes an employee
-    deleteEmployee() {
-
+    // Deletes an employee from the database
+    deleteEmployee(emplyoeeID) {
+        return this.query(
+            'DELETE FROM employee WHERE id = $1', 
+            [employeeID]
+        )
     }
 
     // Find all the roles available
     viewAllRoles() {
-
+        return this.query(
+            'SELECT role.id, role.title, department.department_name, role.salary FROM role LEFT JOIN department on role.department_id = department.id;'
+        )
     }
 
-    // Add a new role
-    addRole() {
-
+    // Add a new role to the database
+    addRole(role) {
+        const { title, salary, department_id} = role;
+        return this.query (
+            'INSERT INTO role (title, salary, department_id) VALUES ($! $2 $3)',
+            [title, salary, department_id]
+        )
     }
 
-    // Deletes a role
-    deleteRole() {
-
+    // Deletes a role from the database
+    deleteRole(roleID) {
+        this.query (
+            'DELETE FROM role WHERE id = $1',
+            [roleID]
+        )
     }
 
     // Finds all the departments available
     veiwAllDepartments() {
-
+        return this.query (
+            'SELECT department.id, department.department_name FROM department'
+        )
     }
 
-    // Adds a department 
-    addDepartment() {
-
+    // Adds a department to the database
+    addDepartment(departmentID) {
+        this.query (
+            'INSERT INTO department (department_name) VALUES ($1)',
+            [department_name]
+        )
     }
 
-    // Deletes a department
-    deleteDepartment() {
+    // Deletes a department from the database
+    deleteDepartment(departmentID) {
+        return this.query (
+            'DELETE FROM department WHERE id = $1',
+            [departmentID]
+        )
+    }
 
+    // Finds all employees in a given department
+    viewAllEmployeesByDepartment(departmentID) {
+        return this.query (
+            'SELECT employee.id, employee.employee_name, role.title FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id WHERE department.id = $1;',
+            [departmentID]
+        )
     }
 }
+module.exports = new DB();
