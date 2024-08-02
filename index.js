@@ -3,6 +3,14 @@ const { prompt } = require('inquirer');
 // Imort db
 const db = require('./db');
 
+init();
+
+function init() {
+    console.log('Function init() working');
+
+    userInput();
+}
+
 function userInput() {
     prompt([
         {
@@ -81,9 +89,9 @@ function userInput() {
             case 'VIEW_ALL_ROLES':
                 updateEmployeeRole();
                 break;
-            // case 'UPDATE_EMPLOYEE_ROLE':
-            //     updateEmployeeRole()
-            //     break;
+            case 'UPDATE_EMPLOYEE_ROLE':
+                updateEmployeeRole()
+                break;
             case 'ADD_ROLE':
                 addRole();
                 break;
