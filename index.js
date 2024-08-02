@@ -3,14 +3,6 @@ const { prompt } = require('inquirer');
 // Imort db
 const db = require('./db');
 
-init();
-
-function init() {
-    console.log(`Funciton init working`);
-
-    userInput();
-}
-
 function userInput() {
     prompt([
         {
@@ -89,9 +81,9 @@ function userInput() {
             case 'VIEW_ALL_ROLES':
                 updateEmployeeRole();
                 break;
-            case 'UPDATE_EMPLOYEE_ROLE':
-                updateEmployeeRole()
-                break;
+            // case 'UPDATE_EMPLOYEE_ROLE':
+            //     updateEmployeeRole()
+            //     break;
             case 'ADD_ROLE':
                 addRole();
                 break;
@@ -174,7 +166,7 @@ function deleteEmployee() {
             }
         ])
         .then((res) => {
-            db.deleteEmployee(res.employeeID)
+            db.deleteEmployee(res.employeeId)
         })
         .then(() => {
             console.log('Employee removed from the database.');
@@ -197,20 +189,20 @@ function updateEmployeeRole() {
         prompt([
             {
                 type: 'list',
-                name: 'employeeID',
-                message: 'Which employee would you like to update?',
+                name: 'employeeId',
+                message: 'Which employee role would you like to update?',
                 choices: employeeOptions
             }
         ])
         .then((res) => {
-            let employeeID = res.employeeID;
+            let employeeId = res.employeeId;
             db.viewAllRoles()
                 .then(({ rows }) => {
                     let roles = rows;
-                    const roleOptions = roles.map(({ id, title }) = ({
+                    const roleChoices = roles.map(({ id, title }) => ({
                         name: title,
-                        value: id
-                    }))
+                        value: id,
+                      }))
                 
                     prompt([
                         {
@@ -221,7 +213,7 @@ function updateEmployeeRole() {
                         }
                     ])
                     .then((res) => {
-                        db.updateEmployeeRole(employeeID, res.roleId)
+                        db.updateEmployeeRole(employeeId, res.roleId)
                     })
                     .then(() => {
                         console.log("Updated employee's role");

@@ -5,9 +5,9 @@ const { Pool } = require('pg');
 // Create a pool object to handle requests to the database
 const pool = new Pool (
     {
-        username: 'employee_db',
+        username: process.env.DB_NAME,
         password: process.env.DB_PASSWORD,
-        databse: process.env.NAME,
+        databse: process.env.DB_DATABASE,
         host: 'localhost'
     },
     console.log(`Connected.`)

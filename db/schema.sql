@@ -26,8 +26,8 @@ CREATE TABLE role (
 CREATE TABLE employee (
     id SERIAL PRIMARY KEY,
     employee_name VARCHAR(30) NOT NULL,
-    roll_id INTEGER,
+    role_id INTEGER,
     manager VARCHAR(50) NOT NULL,
-    FOREIGN KEY (roll_id) REFERENCES roll(id)
+    FOREIGN KEY (role_id) REFERENCES role(id)
     ON DELETE SET NULL
 );
