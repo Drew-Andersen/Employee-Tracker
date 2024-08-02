@@ -143,7 +143,7 @@ function viewAllEmployeesByDepartment() {
             }
         ])
         .then((res) => {
-            db.viewAllEmployeesByDepartment(res.departmentId)
+            db.findAllEmployeesByDepartment(res.departmentId)
         })
         .then(({ rows }) => {
             let employees = rows;
@@ -157,7 +157,7 @@ function viewAllEmployeesByDepartment() {
 
 // Deletes an employee
 function deleteEmployee() {
-    db.viewAllEmployees()
+    db.findAllEmployees()
         .then(({ rows }) => {
             let employees = rows;
             const employeeOptions = employees.map(({ id, employee_name }) => ({
@@ -186,7 +186,7 @@ function deleteEmployee() {
 
 // Update an employee's role
 function updateEmployeeRole() {
-    db.viewAllEmployees()
+    db.findAllEmployees()
         .then(({ rows }) => {
             let employees = rows;
             const employeeOptions = employees.map(({ id, employee_name}) => ({
@@ -272,7 +272,7 @@ function addRole() {
                 }
             ])
             .then((role) => {
-                db.createRole(role)
+                db.addRole(role)
                     .then(() => {
                         console.log('New role added to the database');
                     })
@@ -401,15 +401,21 @@ function addEmployee() {
             ])
             .then((res) => {
                 let roleId = res.roleId;
-                db.viewAllEmployees()
+                db.findAllEmployees()
                     .then(({ rows }) => {
                         let employees = rows;
                         const employeeOptions = employees.map(({ id, employee_name}) => ({
-                            name: employee_name,
+                            name: `${employee_name}`,
                             value: id
                         }))
                     })
                     .then((res) => {
+                        let employee = {
+                            role_id: roleId,
+                            full_name: employee_name,
+                            manager: manager
+                        }
+                        
                         db.createEmployee(employee)
                     })
                     .then(() => {

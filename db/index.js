@@ -4,10 +4,10 @@ const pool = require('./config/connection');
 class DB {
     constructor() {}
 
-    // Find all employees, joined with rolls and departments tables to display their roles, salaries, departments, and managers
+    // Find all employees, joined with roles and departments tables to display their roles, salaries, departments, and managers
     findAllEmployees() {
         return this.query(
-            'SELECT employee_name, roll.title, department.department_name AS department, roll.salary, manager FROM employee LEFT JOIN roll on employee.roll_id = roll.id LEFT JOIN department on roll.department_id = department.id;'
+            'SELECT employee.id, employee_name, role.title, department.department_name AS department, role.salary, manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id;'
         );
     }
 
@@ -21,17 +21,17 @@ class DB {
     }
 
     // Deletes an employee from the database
-    deleteEmployee(emplyoeeID) {
+    deleteEmployee(employeeId) {
         return this.query(
             'DELETE FROM employee WHERE id = $1', 
-            [employeeID]
+            [employeeId]
         )
     }
 
     // Find all the roles available
     viewAllRoles() {
         return this.query(
-            'SELECT role.id, role.title, department.department_name, role.salary FROM role LEFT JOIN department on role.department_id = department.id;'
+            'SELECT role.id, role.title, department.department_name AS department, role.salary FROM role LEFT JOIN department on role.department_id = department.id;'
         )
     }
 
@@ -39,24 +39,24 @@ class DB {
     addRole(role) {
         const { title, salary, department_id} = role;
         return this.query (
-            'INSERT INTO role (title, salary, department_id) VALUES ($! $2 $3)',
+            'INSERT INTO role (title, salary, department_id) VALUES ($1 $2 $3)',
             [title, salary, department_id]
         )
     }
 
     // Deletes a role from the database
-    deleteRole(roleID) {
+    deleteRole(roleId) {
         this.query (
             'DELETE FROM role WHERE id = $1',
-            [roleID]
+            [roleId]
         )
     }
 
     // Updates an employee's role
-    updateEmployeeRole(employeeID, roleID) {
+    updateEmployeeRole(employeeId, roleId) {
         return this.query(
             'UPDATE employee SET role_id = $1 WHERE id = $2',
-            [roleID, employeeID]
+            [roleId, employeeId]
         )
     }    
 
@@ -68,26 +68,26 @@ class DB {
     }
 
     // Adds a department to the database
-    addDepartment(departmentID) {
+    addDepartment(department) {
         this.query (
             'INSERT INTO department (department_name) VALUES ($1)',
-            [department_name]
+            [department.department_name]
         )
     }
 
     // Deletes a department from the database
-    deleteDepartment(departmentID) {
+    deleteDepartment(departmentId) {
         return this.query (
             'DELETE FROM department WHERE id = $1',
-            [departmentID]
+            [departmentId]
         )
     }
 
     // Finds all employees in a given department
-    findAllEmployeesByDepartment(departmentID) {
+    findAllEmployeesByDepartment(departmentId) {
         return this.query (
             'SELECT employee.id, employee.employee_name, role.title FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id WHERE department.id = $1;',
-            [departmentID]
+            [departmentId]
         )
     }
 }
